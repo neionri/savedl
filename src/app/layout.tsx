@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster as SonnerToaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,24 +15,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Z.ai Code Scaffold - AI-Powered Development",
-  description: "Modern Next.js scaffold optimized for AI-powered development with Z.ai. Built with TypeScript, Tailwind CSS, and shadcn/ui.",
-  keywords: ["Z.ai", "Next.js", "TypeScript", "Tailwind CSS", "shadcn/ui", "AI development", "React"],
-  authors: [{ name: "Z.ai Team" }],
+  title: "Media Downloader Pro - Download Video & Audio dari YouTube, TikTok, Instagram",
+  description: "Download video, audio, dan foto dari YouTube, TikTok, dan Instagram dengan mudah dan cepat. Support berbagai format kualitas tinggi.",
+  keywords: ["YouTube downloader", "TikTok downloader", "Instagram downloader", "video download", "audio download", "media downloader"],
+  authors: [{ name: "Media Downloader Team" }],
   icons: {
     icon: "https://z-cdn.chatglm.cn/z-ai/static/logo.svg",
   },
   openGraph: {
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
+    title: "Media Downloader Pro",
+    description: "Download video, audio, dan foto dari YouTube, TikTok, dan Instagram dengan mudah",
     url: "https://chat.z.ai",
-    siteName: "Z.ai",
+    siteName: "Media Downloader Pro",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Z.ai Code Scaffold",
-    description: "AI-powered development with modern React stack",
+    title: "Media Downloader Pro",
+    description: "Download video, audio, dan foto dari YouTube, TikTok, dan Instagram dengan mudah",
   },
 };
 
@@ -46,15 +46,9 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster />
-        </ThemeProvider>
+        {children}
+        <Toaster />
+        <SonnerToaster />
       </body>
     </html>
   );
