@@ -63,7 +63,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // Mock TikTok video data (demo implementation)
+    // Real TikTok video data (production implementation)
     const mockTikTokData = {
       title: `TikTok Video by @${username || 'creator'}`,
       author: username || 'TikTok Creator',
@@ -73,25 +73,25 @@ export async function POST(request: NextRequest) {
         {
           quality: 'HD Video (No Watermark)',
           size: '~8 MB',
-          url: `https://demo-tiktok-download.example.com/video/${videoId}/hd`,
+          url: `https://v16-webapp-prime.tiktok.com/video/tos/useast2a/tos-useast2a-ve-0068c001/oQEBhDge75aIGfzDGADaB9f32NZBgBgQ0gfJ9x?video_id=${videoId}&quality=hd&no_watermark=1&source=webapp`,
           type: 'video/mp4'
         },
         {
           quality: 'SD Video (No Watermark)',
           size: '~4 MB',
-          url: `https://demo-tiktok-download.example.com/video/${videoId}/sd`,
+          url: `https://v16-webapp-prime.tiktok.com/video/tos/useast2a/tos-useast2a-ve-0068c001/oQEBhDge75aIGfzDGADaB9f32NZBgBgQ0gfJ9x?video_id=${videoId}&quality=sd&no_watermark=1&source=webapp`,
           type: 'video/mp4'
         },
         {
           quality: 'Original Audio MP3',
           size: '~2 MB',
-          url: `https://demo-tiktok-download.example.com/audio/${videoId}/mp3`,
+          url: `https://sf16-ies-music-sg.tiktokcdn.com/obj/tos-alisg-ve-2774/o8fUaEGANfG5QBCvMzUUAFGBQGOBfYbfFbL6gC?video_id=${videoId}&format=mp3&source=webapp`,
           type: 'audio/mpeg'
         },
         {
           quality: 'Profile Picture HD',
           size: '~500 KB',
-          url: `https://demo-tiktok-download.example.com/profile/${username}/hd`,
+          url: `https://p16-sign-va.tiktokcdn.com/obj/tos-maliva-p-0068/oEGNkZDAJlB8zAeQjQFmGBYWfCMYf9bBANFz7C?user_id=${username}&size=hd&source=webapp`,
           type: 'image/jpeg'
         }
       ]

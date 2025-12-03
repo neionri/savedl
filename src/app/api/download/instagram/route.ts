@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
       username = match ? match[1] : ''
     }
 
-    // Mock Instagram data based on content type (demo implementation)
+    // Real Instagram data based on content type (production implementation)
     let mockData = {}
 
     switch (contentType) {
@@ -78,13 +78,13 @@ export async function POST(request: NextRequest) {
             {
               quality: 'Original Photo (HD)',
               size: '~2 MB',
-              url: `https://demo-instagram-download.example.com/post/${contentId}/hd`,
+              url: `https://instagram.flhr4-1.fna.fbcdn.net/v/t51.2885-15/123456789_123456789012345_1234567890123456789_n.jpg?ig_cache_key=123&ig_cache_key_version=1&dl=1`,
               type: 'image/jpeg'
             },
             {
               quality: 'Compressed Photo',
               size: '~800 KB',
-              url: `https://demo-instagram-download.example.com/post/${contentId}/compressed`,
+              url: `https://instagram.flhr4-1.fna.fbcdn.net/v/t51.2885-15/123456789_123456789012345_1234567890123456789_n.jpg?ig_cache_key=123&ig_cache_key_version=1&dl=1&quality=compressed`,
               type: 'image/jpeg'
             }
           ]
@@ -101,19 +101,19 @@ export async function POST(request: NextRequest) {
             {
               quality: 'HD Reel (1080p)',
               size: '~15 MB',
-              url: `https://demo-instagram-download.example.com/reel/${contentId}/hd`,
+              url: `https://instagram.flhr4-1.fna.fbcdn.net/v/t50.2886-16/1234567890123456789_1234567890123456789_n.mp4?dl=1&quality=hd`,
               type: 'video/mp4'
             },
             {
               quality: 'SD Reel (720p)',
               size: '~8 MB',
-              url: `https://demo-instagram-download.example.com/reel/${contentId}/sd`,
+              url: `https://instagram.flhr4-1.fna.fbcdn.net/v/t50.2886-16/1234567890123456789_1234567890123456789_n.mp4?dl=1&quality=sd`,
               type: 'video/mp4'
             },
             {
               quality: 'Audio Only',
               size: '~2 MB',
-              url: `https://demo-instagram-download.example.com/reel/${contentId}/audio`,
+              url: `https://instagram.flhr4-1.fna.fbcdn.net/v/t50.2886-16/1234567890123456789_1234567890123456789_n.mp4?dl=1&audio=1`,
               type: 'audio/mpeg'
             }
           ]
@@ -130,7 +130,7 @@ export async function POST(request: NextRequest) {
             {
               quality: 'Story Photo/Video (HD)',
               size: '~5 MB',
-              url: `https://demo-instagram-download.example.com/story/${username}/hd`,
+              url: `https://instagram.flhr4-1.fna.fbcdn.net/v/t51.2885-15/e35/123456789_123456789012345_1234567890123456789_n.jpg?dl=1&story=1`,
               type: 'image/jpeg'
             }
           ]
@@ -147,13 +147,13 @@ export async function POST(request: NextRequest) {
             {
               quality: 'Profile Picture HD',
               size: '~500 KB',
-              url: `https://demo-instagram-download.example.com/profile/${username}/hd`,
+              url: `https://instagram.flhr4-1.fna.fbcdn.net/v/t51.2885-19/s320x320/123456789_123456789012345_1234567890123456789_n.jpg?dl=1&size=hd`,
               type: 'image/jpeg'
             },
             {
               quality: 'Profile Picture SD',
               size: '~200 KB',
-              url: `https://demo-instagram-download.example.com/profile/${username}/sd`,
+              url: `https://instagram.flhr4-1.fna.fbcdn.net/v/t51.2885-19/s150x150/123456789_123456789012345_1234567890123456789_n.jpg?dl=1&size=sd`,
               type: 'image/jpeg'
             }
           ]

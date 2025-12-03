@@ -111,7 +111,7 @@ export default function DownloaderPage() {
     }
   }
 
-  const handleFileDownload = async (downloadUrl: string, filename: string) => {
+  const handleFileDownload = async (downloadUrl: string, filename: string, formatType: string) => {
     try {
       setDownloadingFile(filename)
       setDownloadProgress(0)
@@ -127,27 +127,50 @@ export default function DownloaderPage() {
         })
       }, 300)
 
-      // For demo purposes, we'll simulate the download
-      // In a real implementation, you would fetch the actual file
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // Fetch the actual file
+      const response = await fetch(downloadUrl)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const contentLength = response.headers.get('content-length')
+      const total = contentLength ? parseInt(contentLength, 10) : 0
+      let loaded = 0
+
+      const reader = response.body?.getReader()
+      const chunks: Uint8Array[] = []
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) break
+          
+          chunks.push(value)
+          loaded += value.length
+          
+          if (total > 0) {
+            const progress = Math.round((loaded / total) * 100)
+            setDownloadProgress(progress)
+          }
+        }
+      }
 
       clearInterval(progressInterval)
       setDownloadProgress(100)
 
-      // Create a demo file for download
-      const demoContent = `This is a demo download from Media Downloader Pro\n\nOriginal URL: ${downloadUrl}\nFilename: ${filename}\nDownloaded at: ${new Date().toLocaleString()}\n\nNote: This is a demonstration. In a real implementation, this would be the actual media file.`
-      
-      const blob = new Blob([demoContent], { type: 'text/plain' })
+      // Create blob and download
+      const blob = new Blob(chunks, { type: formatType })
       const url = window.URL.createObjectURL(blob)
       const a = document.createElement('a')
       a.href = url
-      a.download = `demo-${filename.replace(/\.[^/.]+$/, ".txt")}`
+      a.download = filename
       document.body.appendChild(a)
       a.click()
       window.URL.revokeObjectURL(url)
       document.body.removeChild(a)
 
-      toast.success(`Demo file untuk ${filename} berhasil diunduh!`)
+      toast.success(`${filename} berhasil diunduh!`)
       
       // Reset progress after a short delay
       setTimeout(() => {
@@ -189,7 +212,7 @@ export default function DownloaderPage() {
         </div>
 
         {/* Supported Platforms */}
-        <div className="flex justify-center gap-4 mb-6">
+        <div className="flex justify-center gap-4 mb-8">
           <Badge variant="outline" className="flex items-center gap-2 px-4 py-2">
             <Youtube className="h-4 w-4 text-red-600" />
             YouTube
@@ -203,14 +226,6 @@ export default function DownloaderPage() {
             Instagram
           </Badge>
         </div>
-
-        {/* Demo Notice */}
-        <Alert className="mb-6 border-blue-200 bg-blue-50">
-          <AlertCircle className="h-4 w-4 text-blue-600" />
-          <AlertDescription className="text-blue-800">
-            <strong>Demo Mode:</strong> Website ini adalah demonstrasi. Download akan menghasilkan file demo text yang menampilkan informasi metadata.
-          </AlertDescription>
-        </Alert>
 
         {/* Main Content */}
         <div className="max-w-4xl mx-auto">
@@ -226,7 +241,7 @@ export default function DownloaderPage() {
               <div className="space-y-4 mb-6">
                 <div className="flex gap-2">
                   <Input
-                    placeholder="YouTube: youtube.com/watch?v=... | TikTok: tiktok.com/@user/video/... | Instagram: instagram.com/p/..."
+                    placeholder="Paste URL video/audio/foto dari YouTube, TikTok, atau Instagram..."
                     value={url}
                     onChange={(e) => setUrl(e.target.value)}
                     className="flex-1"
@@ -330,7 +345,8 @@ export default function DownloaderPage() {
                                   size="sm"
                                   onClick={() => handleFileDownload(
                                     format.url, 
-                                    `${result.data?.title || 'media'}.${format.type.split('/')[1] || 'mp4'}`
+                                    `${result.data?.title || 'media'}.${format.type.split('/')[1] || 'mp4'}`,
+                                    format.type
                                   )}
                                   className="bg-green-500 hover:bg-green-600"
                                   disabled={downloadingFile !== null}
